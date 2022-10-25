@@ -1,6 +1,6 @@
 package main
 
-import _ "blog/pkg/setting"
+import _ "blog/models"
 
 func main() {
 
