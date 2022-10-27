@@ -1,5 +1,5 @@
 跟着这篇博客做的练习
-> [Go Web 框架 Gin 实践](https://www.zhihuclub.com/88537.shtml)
+> [Go Web 框架 Gin 实践](https://segmentfault.com/a/1190000013297625#articleHeader5)
 > 
 > 作者：煎鱼
 > 
