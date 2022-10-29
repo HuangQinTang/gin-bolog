@@ -13,14 +13,14 @@ import (
 var db *gorm.DB
 
 type Model struct {
-	ID int `gorm:"primary_key" json:"id"`
-	CreatedOn int `json:"created_on"`
+	ID         int `gorm:"primary_key" json:"id"`
+	CreatedOn  int `json:"created_on"`
 	ModifiedOn int `json:"modified_on"`
 }
 
 func init() {
 	var (
-		err error
+		err                                               error
 		dbType, dbName, user, password, host, tablePrefix string
 	)
 
@@ -46,12 +46,12 @@ func init() {
 		log.Println(err)
 	}
 
-	gorm.DefaultTableNameHandler = func (db *gorm.DB, defaultTableName string) string  {
+	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
 		return tablePrefix + defaultTableName
 	}
 
-	db.SingularTable(true)
-	db.LogMode(true)
+	db.SingularTable(true)	//gorm默认使用复数映射，此配置表示严格匹配不走进行默认复数映射
+	db.LogMode(true) //打印sql
 	db.DB().SetMaxIdleConns(10)
 	db.DB().SetMaxOpenConns(100)
 }
