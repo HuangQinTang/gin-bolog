@@ -1,6 +1,8 @@
 package routers
 
 import (
+	"blog/middleware/jwt"
+	"blog/routers/api"
 	"github.com/gin-gonic/gin"
 
 	"blog/pkg/setting"
@@ -10,13 +12,16 @@ import (
 func InitRouter() *gin.Engine {
 	r := gin.New()
 
-	r.Use(gin.Logger())
+	r.Use(gin.Logger()) //日志中间件
 
-	r.Use(gin.Recovery())
+	r.Use(gin.Recovery()) //避免panic导致程序退出
 
-	gin.SetMode(setting.RunMode)
+	gin.SetMode(setting.RunMode) //是否debug模式
 
-	apiv1 := r.Group("/api/v1")
+	//获取token
+	r.GET("/auth", api.GetAuth)
+
+	apiv1 := r.Group("/api/v1").Use(jwt.JWT())
 	{
 		//获取标签列表
 		apiv1.GET("/tags", v1.GetTags)
