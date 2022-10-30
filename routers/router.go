@@ -4,6 +4,8 @@ import (
 	"blog/middleware/jwt"
 	"blog/routers/api"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"blog/pkg/setting"
 	"blog/routers/api/v1"
@@ -18,6 +20,8 @@ func InitRouter() *gin.Engine {
 
 	gin.SetMode(setting.RunMode) //是否debug模式
 
+	//swagger文档
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	//获取token
 	r.GET("/auth", api.GetAuth)
 

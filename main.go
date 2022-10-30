@@ -9,6 +9,8 @@ import (
 
 	"blog/pkg/setting"
 	"blog/routers"
+
+	_ "blog/docs"
 )
 
 func main() {
