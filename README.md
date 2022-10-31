@@ -21,3 +21,12 @@ gin-blog/
 - pkg：第三方包
 - routers 路由逻辑处理
 - runtime 应用运行时数据
+
+构建镜像
+```
+docker image build -t blog .
+```
+运行容器
+```
+docker container run -d --rm -d -p 8000:8000 blog
+```
