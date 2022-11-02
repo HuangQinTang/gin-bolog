@@ -30,3 +30,7 @@ docker image build -t blog .
 ```
 docker container run -d --rm -d -p 8000:8000 blog
 ```
+两阶段式构建，减少镜像大小
+```
+docker image build -f Dockerfile-new -t blog .
+```
