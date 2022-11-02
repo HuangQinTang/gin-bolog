@@ -20,6 +20,7 @@ RUN addgroup -S www && adduser -S www && \
 #RUN groupadd -r www && useradd -r -g www www && \
 #    chown -R www:www /data/gin_blog \
 
+#window无法指定用户运行，需要屏蔽下面这行
 USER www
 COPY --from=builder /data/gin_blog /data/gin_blog
 
