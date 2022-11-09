@@ -21,3 +21,8 @@ const (
 	// 校验图片错误，图片格式或大小有问题
 	ERROR_UPLOAD_CHECK_IMAGE_FORMAT = 30003
 )
+
+const (
+	CACHE_ARTICLE = "ARTICLE"
+	CACHE_TAG     = "TAG"
+)
