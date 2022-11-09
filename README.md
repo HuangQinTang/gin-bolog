@@ -40,5 +40,5 @@ go run main.go
 ```
 启动定时任务
 ```
-go run cron.go 
+go run routers/cron/cron.go
 ```

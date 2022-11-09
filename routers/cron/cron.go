@@ -1,16 +1,18 @@
 package main
 
 import (
+	"blog/pkg/setting"
+	"github.com/robfig/cron"
 	"log"
 	"time"
-
-	"github.com/robfig/cron"
 
 	"blog/models"
 )
 
 func main() {
-	log.Println("Starting...")
+	setting.Setup() //初始化配置
+	models.Setup()  //连接mysql
+	log.Println("Cron Starting...")
 
 	c := cron.New()
 	c.AddFunc("* * * * * *", func() {

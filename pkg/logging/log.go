@@ -29,11 +29,16 @@ const (
 	FATAL
 )
 
-func init() {
+func Setup() {
 	filePath := getLogFileFullPath()
+	fmt.Println(filePath)
 	F = openLogFile(filePath)
 
 	logger = log.New(F, DefaultPrefix, log.LstdFlags)
+}
+
+func Close() {
+	F.Close()
 }
 
 func Debug(v ...interface{}) {
@@ -70,5 +75,5 @@ func setPrefix(level Level) {
 		logPrefix = fmt.Sprintf("[%s]", levelFlags[level])
 	}
 
-	logger.SetPrefix(logPrefix)	//日志前缀
+	logger.SetPrefix(logPrefix) //日志前缀
 }

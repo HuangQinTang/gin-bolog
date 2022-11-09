@@ -18,7 +18,7 @@ func InitRouter() *gin.Engine {
 
 	r.Use(gin.Recovery()) //避免panic导致程序退出
 
-	gin.SetMode(setting.RunMode) //是否debug模式
+	gin.SetMode(setting.ServerSetting.RunMode) //是否debug模式
 
 	//swagger文档
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

@@ -8,7 +8,7 @@ import (
 	"blog/pkg/setting"
 )
 
-var jwtSecret = []byte(setting.JwtSecret)
+var jwtSecret = []byte(setting.AppSetting.JwtSecret)
 
 type Claims struct {
 	Username string `json:"username"`
@@ -23,14 +23,14 @@ func GenerateToken(username, password string) (string, error) {
 	claims := Claims{
 		username,
 		password,
-		jwt.StandardClaims {
-			ExpiresAt : expireTime.Unix(),
-			Issuer : "gin-blog",
+		jwt.StandardClaims{
+			ExpiresAt: expireTime.Unix(),
+			Issuer:    "gin-blog",
 		},
 	}
 
 	tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	token, err := tokenClaims.SignedString(jwtSecret)	//生成jwt签名
+	token, err := tokenClaims.SignedString(jwtSecret) //生成jwt签名
 
 	return token, err
 }
@@ -41,7 +41,7 @@ func ParseToken(token string) (*Claims, error) {
 	})
 
 	if tokenClaims != nil {
-		if claims, ok := tokenClaims.Claims.(*Claims); ok && tokenClaims.Valid {	//断言类型与判断token有效期
+		if claims, ok := tokenClaims.Claims.(*Claims); ok && tokenClaims.Valid { //断言类型与判断token有效期
 			return claims, nil
 		}
 	}

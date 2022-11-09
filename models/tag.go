@@ -52,19 +52,16 @@ func ExistTagByID(id int) bool {
 }
 
 func DeleteTag(id int) bool {
-	db.Where("id = ?", id).Delete(&Tag{})
+	err := db.Where("id = ?", id).Delete(&Tag{})
 
-	return true
+	return err.Error == nil
 }
 
 func EditTag(id int, data interface{}) bool {
-	db.Model(&Tag{}).Where("id = ?", id).Updates(data)
-
-	return true
+	return db.Model(&Tag{}).Where("id = ?", id).Updates(data) == nil
 }
 
 func CleanAllTag() bool {
-	db.Unscoped().Where("deleted_on != ? ", 0).Delete(&Tag{})
-
-	return true
+	err := db.Unscoped().Where("deleted_on != ? ", 0).Delete(&Tag{})
+	return err.Error == nil
 }

@@ -1,27 +1,27 @@
 package logging
 
 import (
-	"os"
-	"time"
+	"blog/pkg/setting"
 	"fmt"
 	"log"
-)
-
-var (
-	LogSavePath = "runtime/logs/"
-	LogSaveName = "log"
-	LogFileExt = "log"
-	TimeFormat = "20060102"
+	"os"
+	"time"
 )
 
 func getLogFilePath() string {
-	return fmt.Sprintf("%s", LogSavePath)
+	return fmt.Sprintf("%s", setting.AppSetting.LogSavePath)
 }
 
 // 获取日志文件路径及文件名
 func getLogFileFullPath() string {
+	//fmt.Println("----")
+	//fmt.Println("LogSavePath", LogSavePath)
+	//fmt.Println("LogSaveName", LogSaveName)
+	//fmt.Println("LogFileExt", LogFileExt)
+	//fmt.Println("TimeFormat", TimeFormat)
+	//fmt.Println("----")
 	prefixPath := getLogFilePath()
-	suffixPath := fmt.Sprintf("%s%s.%s", LogSaveName, time.Now().Format(TimeFormat), LogFileExt)
+	suffixPath := fmt.Sprintf("%s%s.%s", setting.AppSetting.LogSaveName, time.Now().Format(setting.AppSetting.TimeFormat), setting.AppSetting.LogFileExt)
 
 	return fmt.Sprintf("%s%s", prefixPath, suffixPath)
 }
@@ -35,7 +35,7 @@ func openLogFile(filePath string) *os.File {
 		log.Fatalf("Permission :%v", err)
 	}
 
-	handle, err := os.OpenFile(filePath, os.O_APPEND | os.O_CREATE | os.O_WRONLY, 0644)
+	handle, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Fatalf("Fail to OpenFile :%v", err)
 	}
@@ -45,7 +45,7 @@ func openLogFile(filePath string) *os.File {
 
 func mkDir() {
 	dir, _ := os.Getwd()
-	err := os.MkdirAll(dir + "/" + getLogFilePath(), os.ModePerm)
+	err := os.MkdirAll(dir+"/"+getLogFilePath(), os.ModePerm)
 	if err != nil {
 		panic(err)
 	}
