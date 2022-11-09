@@ -2,10 +2,12 @@ package routers
 
 import (
 	"blog/middleware/jwt"
+	"blog/pkg/upload"
 	"blog/routers/api"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"net/http"
 
 	"blog/pkg/setting"
 	"blog/routers/api/v1"
@@ -24,6 +26,8 @@ func InitRouter() *gin.Engine {
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	//获取token
 	r.GET("/auth", api.GetAuth)
+	//上传文件
+	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
 
 	apiv1 := r.Group("/api/v1").Use(jwt.JWT())
 	{
@@ -46,6 +50,9 @@ func InitRouter() *gin.Engine {
 		apiv1.PUT("/articles/:id", v1.EditArticle)
 		//删除指定文章
 		apiv1.DELETE("/articles/:id", v1.DeleteArticle)
+
+		//文件上传
+		apiv1.POST("/upload", api.UploadImage)
 	}
 
 	return r

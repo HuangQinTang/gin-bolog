@@ -30,15 +30,21 @@ const (
 )
 
 func Setup() {
-	filePath := getLogFileFullPath()
-	fmt.Println(filePath)
-	F = openLogFile(filePath)
+	var err error
+	filePath := getLogFilePath()
+	fileName := getLogFileName()
+	F, err = openLogFile(fileName, filePath)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	logger = log.New(F, DefaultPrefix, log.LstdFlags)
 }
 
 func Close() {
-	F.Close()
+	if F != nil {
+		F.Close()
+	}
 }
 
 func Debug(v ...interface{}) {

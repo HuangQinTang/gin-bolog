@@ -25,6 +25,7 @@ CREATE TABLE `blog_article`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `tag_id` int(10) UNSIGNED NULL DEFAULT 0 COMMENT '标签ID',
   `title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '文章标题',
+  `cover_image_url` varchar(255) NOT NULL DEFAULT '' COMMENT '封面图片地址',
   `desc` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '简述',
   `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `created_on` int(11) NULL DEFAULT NULL,
