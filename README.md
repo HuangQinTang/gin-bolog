@@ -34,3 +34,11 @@ docker container run -d --rm -d -p 8000:8000 blog
 ```
 docker image build -f Dockerfile-new -t blog .
 ```
+项目根目录启动程序
+```
+go run main.go
+```
+启动定时任务
+```
+go run cron.go 
+```
