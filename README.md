@@ -46,6 +46,17 @@ exit;
 #ctrl+c，退出容器
 ```
 
+nginx的配置文件如下，nginx.conf
+```
+server {
+  listen  80 default_server;
+  location / {
+    proxy_pass http://blog:10001;
+  }
+}
+```
+自行修改在docker-compose.yml中修改nginx配置文件，日志文件的挂载路径，还有mysql的。
+
 启动服务
 
 `docker-compose up -d`
