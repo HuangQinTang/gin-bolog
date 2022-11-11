@@ -4,6 +4,7 @@ import (
 	"blog/pkg/logging"
 	"blog/pkg/setting"
 	"fmt"
+	"os"
 	"sync"
 	"time"
 
@@ -23,14 +24,18 @@ type Model struct {
 
 func Setup() {
 	once.Do(func() {
+		host := os.Getenv(setting.DatabaseSetting.Host) + ":" + setting.DatabaseSetting.Port
+		psw := os.Getenv(setting.DatabaseSetting.Password)
 		var err error
 		db, err = gorm.Open(setting.DatabaseSetting.Type, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
 			setting.DatabaseSetting.User,
-			setting.DatabaseSetting.Password,
-			setting.DatabaseSetting.Host,
+			psw,
+			host,
 			setting.DatabaseSetting.Name))
 
 		if err != nil {
+			fmt.Println(psw)
+			fmt.Println(err.Error())
 			logging.Fatal(err)
 		}
 

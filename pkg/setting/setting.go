@@ -39,6 +39,7 @@ type Database struct {
 	User        string
 	Password    string
 	Host        string
+	Port        string
 	Name        string
 	TablePrefix string
 }
@@ -47,6 +48,7 @@ var DatabaseSetting = &Database{}
 
 type Redis struct {
 	Host        string
+	Port        string
 	Password    string
 	MaxIdle     int
 	MaxActive   int

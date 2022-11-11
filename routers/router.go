@@ -28,6 +28,14 @@ func InitRouter() *gin.Engine {
 	r.GET("/auth", api.GetAuth)
 	//上传文件
 	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
+	//用于健康检查
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"code": http.StatusOK,
+			"msg":  "success",
+			"data": nil,
+		})
+	})
 
 	apiv1 := r.Group("/api/v1").Use(jwt.JWT())
 	{

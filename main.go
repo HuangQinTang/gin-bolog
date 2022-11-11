@@ -3,6 +3,7 @@ package main
 import (
 	_ "blog/docs"
 	"blog/models"
+	"blog/pkg/gredis"
 	"blog/pkg/logging"
 	"blog/pkg/setting"
 	"blog/routers"
@@ -13,10 +14,11 @@ import (
 )
 
 func main() {
-	setting.Setup()       //初始化配置
-	logging.Setup()       //初始化日志配置
-	defer logging.Close() //关闭日志句柄
-	models.Setup()        //连接mysql
+	setting.Setup() //初始化配置
+	logging.Setup() //初始化日志配置
+	models.Setup()  //连接mysql
+	gredis.Setup()  //连接redis
+	defer close()   //关闭资源
 
 	endless.DefaultReadTimeOut = setting.ServerSetting.ReadTimeout   //请求超时
 	endless.DefaultWriteTimeOut = setting.ServerSetting.WriteTimeout //响应超时
@@ -32,4 +34,11 @@ func main() {
 	if err != nil {
 		log.Printf("Server err: %v", err)
 	}
+}
+
+// close 关闭资源
+func close() {
+	logging.F.Close()        //关闭日志文件句柄
+	models.CloseDB()         //关闭mysql连接池
+	gredis.RedisConn.Close() //关闭redis连接池
 }

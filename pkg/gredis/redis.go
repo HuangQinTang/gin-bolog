@@ -3,7 +3,9 @@ package gredis
 import (
 	"blog/pkg/setting"
 	"encoding/json"
+	"fmt"
 	"github.com/gomodule/redigo/redis"
+	"os"
 	"sync"
 	"time"
 )
@@ -13,17 +15,21 @@ var once sync.Once
 
 func Setup() error {
 	once.Do(func() {
+		host := os.Getenv(setting.RedisSetting.Host) + ":" + setting.RedisSetting.Port
+		psw := os.Getenv(setting.RedisSetting.Password)
 		RedisConn = &redis.Pool{
 			MaxIdle:     setting.RedisSetting.MaxIdle,
 			MaxActive:   setting.RedisSetting.MaxActive,
 			IdleTimeout: time.Duration(setting.RedisSetting.IdleTimeout) * time.Second,
 			Dial: func() (redis.Conn, error) {
-				c, err := redis.Dial("tcp", setting.RedisSetting.Host)
+				c, err := redis.Dial("tcp", host)
 				if err != nil {
+					fmt.Println(psw)
+					fmt.Println(err.Error())
 					return nil, err
 				}
-				if setting.RedisSetting.Password != "" {
-					if _, err := c.Do("AUTH", setting.RedisSetting.Password); err != nil {
+				if psw != "" {
+					if _, err := c.Do("AUTH", psw); err != nil {
 						c.Close()
 						return nil, err
 					}
