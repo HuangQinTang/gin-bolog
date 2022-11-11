@@ -72,3 +72,13 @@ Starting gin_blog_mysql-server_1 ... done
 - 备注
 - 这里我采用的是把mysql,redis容器名和密码作为环境变量定义在blog(go服务)容器，代码里面采用`os.Getenv(环境变量名)`来连接mysql和redis。
 - go服务的构建文件是Dockerfile-new
+
+go应用的镜像可以下载curl，添加如下健康检查
+```azure
+healthcheck:
+  test: [ "CMD", "curl", "-f", "http://localhost:10001" ]
+  interval: 30s
+  timeout: 3s
+  retries: 3
+  start_period: 40s
+```
